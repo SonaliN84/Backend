@@ -1,11 +1,9 @@
 const express=require('express')
-const path =require('path');
-const rootDir=require('../util/path')
+
 const router=express.Router();
 
-router.get('/contactus',(req,res)=>{
-    res.sendFile(path.join(rootDir,'Views','contact.html'))
-})
+const contactusController=require('../controllers/contactus')
+router.get('/contactus',contactusController.contactusController)
 // router.post('/contactus',(req,res)=>{
 //     res.redirect('/sucess')
 // })
