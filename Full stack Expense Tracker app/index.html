@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Expense Tracker</title>
+    <style>
+        .container{
+            padding:3% 10%;
+        }
+        .itemlist{
+            margin:5% 0;
+           
+        }
+        .margin{
+            margin:5% 0;
+        }
+        .add{
+            border:1px solid rgb(199, 197, 197);
+            border-radius: 5px;
+            padding:0.75rem;
+            
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div><h1>Expense Tracker</h1></div>
+
+        <form class="margin" onsubmit="userdetails(event)">
+            
+            <div class="form-group">
+              <label for="expenseamount">Choose expense amount</label>
+              <input type="text" class="form-control" id="expenseamount" name="expenseamount" placeholder="Enter expense amount" autofocus>
+              
+            </div>
+            <div class="form-group">
+                <label for="description">Choose description</label>
+                <input type="text" class="form-control" id="description" name="description" maxlength="20" placeholder="max 20 characters">
+                
+              </div>
+           <div class="form-group" >
+            <label for="category">Choose a Category</label>
+            <select class="form-select" id="category" name="category" aria-label="Default select example">
+                
+                <option value="Movie">Movie</option>
+                <option value="Holiday">Holiday</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Fuel">Fuel</option>
+                <option value="Electricity">Electricity</option>
+                <option value="Others">Others</option>
+
+              </select>
+              </div>
+            <button type="submit" id="button" class="btn btn-primary btn-block">Add expense</button>
+            
+          </form>
+          <div><h4>Expense History</h4></div>
+          <ul id="itemlist" class="itemlist">
+            
+          </ul>
+    </div>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script src="script.js"></script>
+   
+  </body>
+</html>
