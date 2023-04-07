@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <style>
+    .container{
+     margin:0 10%;
+     padding:4% 10%;
+    }
+    .form{
+        margin:5% 0;
+    }
+    </style>
+    
+</head>
+<body>
+<div class="container">
+    <h2>Add products</h2>
+    <form class="form" onsubmit="cartdetails(event)">
+        <div>
+        <label for="productname">Product Name</label>
+        <input type="text" class="form-control" id="productname" name="productname" placeholder="Enter Product name" required>
+     </div>
+     <div class="form-group my-2">
+    <label for="productprice">Product Price</label>
+    <input type="text" class="form-control" id="productprice" name="productprice" placeholder="Enter Product Price" required>
+    </div>
+  <button type="submit" class="btn btn-primary btn-block my-4">Add Product</button>
+</form>
+<div>
+    <h5>Products</h5>
+    <ul id="itemlist">
+        
+    </ul>
+    
+</div>
+<div id="finalvalue">
+    <h5>Total value of products:</h5>
+</div>
+ </div> 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+ <script>
+
+var price=0;
+
+window.addEventListener('DOMContentLoaded',()=>{
+
+axios.get('http://localhost:3000/product')
+.then((response)=>{
+   
+    for(let i=0;i<response.data.length;i++)
+    {
+        showproductonscreen(response.data[i])
+        
+        cartvalue(response.data[i].ProductPrice)
+    }
+    
+
+})
+.catch((error)=>{console.log(error)})
+}
+   
+)
+
+
+
+function cartdetails(event)
+{
+    event.preventDefault();
+    const ProductName=event.target.productname.value;
+    const ProductPrice=event.target.productprice.value;
+    
+    
+   let obj={
+    ProductName,
+    ProductPrice
+        }
+
+axios.post('http://localhost:3000/product',obj)
+  .then((response)=>{
+    showproductonscreen(response.data)
+    console.log(response)
+  }) 
+  .catch((err)=>{
+    console.log(err)
+  })   
+
+  cartvalue(obj.ProductPrice)
+  
+
+}
+ 
+function showproductonscreen(obj){
+
+    const parentElem=document.getElementById('itemlist');
+    const childElem=document.createElement('li');
+    childElem.textContent=obj.ProductName+'-'+obj.ProductPrice;
+  
+    const deletebutton=document.createElement('input');
+    deletebutton.type='button';
+    deletebutton.value='Delete';
+    deletebutton.className="btn btn-danger btn-sm mx-2 my-2"
+    deletebutton.onclick=()=>{
+       console.log(obj.id)
+        axios.delete(`http://localhost:3000/delete-product/${obj.id}`)
+          .then((response)=>{
+            console.log(response)
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+
+        let objprice=-obj.ProductPrice;
+        cartvalue(objprice)
+        parentElem.removeChild(childElem)  
+    }
+   
+    childElem.appendChild(deletebutton);
+    parentElem.appendChild(childElem);
+
+
+}
+
+function cartvalue(p){
+ p=Number.parseInt(p)
+   price=price+p;
+  const final=document.getElementById('finalvalue');
+  final.innerHTML=`<h5>Total value of products: Rs ${price}</h5>`
+  
+}
+
+
+ </script>
+</body>
+</html>
