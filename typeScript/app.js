@@ -1,0 +1,19 @@
+"use strict";
+const num1 = document.getElementById("num1");
+const num2 = document.getElementById("num2");
+const button = document.querySelector('button');
+function add(num1, num2) {
+    if (typeof num1 === 'number' && typeof num2 === 'number') {
+        return num1 + num2;
+    }
+    else if (typeof num1 === 'string' && typeof num2 === 'string') {
+        return num1 + " " + num2;
+    }
+    return +num1 + +num2;
+}
+button.addEventListener('click', () => {
+    const num1v = num1.value;
+    const num2v = num2.value;
+    const result = add(+num1v, +num2v);
+    console.log(result);
+});
